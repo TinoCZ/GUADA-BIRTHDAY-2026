@@ -24,6 +24,7 @@
 
 html {
     font: 12pt 'Minecraftia', sans-serif;
+
     overflow-x: hidden;
 }
 
@@ -34,6 +35,9 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
 
+    width: 100%;
+    max-width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +45,8 @@ body {
 
     position: relative;
 
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 
     background: #000;
 }
@@ -52,16 +57,20 @@ body {
    ========================================= */
 
 .mc-menu {
-    --btn-size: 30pt;
+    /* 12 columnas de botón + 16px de gaps horizontales.
+       Nunca supera el 94% del ancho de pantalla. */
+    --btn-size: min(30pt, calc((94vw - 16px) / 12));
 
-    width: min(calc(var(--btn-size) * 12), 92vw);
+    width: calc(var(--btn-size) * 12 + 16px);
+
+    max-width: 94vw;
 
     display: grid;
 
     grid-template-columns:
-        1fr
-        10fr
-        1fr;
+        var(--btn-size)
+        calc(var(--btn-size) * 10)
+        var(--btn-size);
 
     grid-template-rows:
         repeat(3, var(--btn-size))
@@ -158,6 +167,10 @@ body {
 
     width: calc(var(--btn-size) * 10);
 
+    max-width: 100%;
+
+    min-width: 0;
+
     cursor: pointer;
 
     overflow: hidden;
@@ -244,6 +257,11 @@ body {
 .mc-button.lang img {
     width: 26px;
     height: 26px;
+
+    max-width: 80%;
+    max-height: 80%;
+
+    object-fit: contain;
 }
 
 
@@ -272,7 +290,7 @@ body {
 
     transform: translate(-50%, -150px);
 
-    width: min(430px, 92vw);
+    width: min(430px, 94vw);
     min-height: 95px;
 
     display: flex;
@@ -318,6 +336,8 @@ body {
     width: 65px;
     height: 65px;
 
+    flex-shrink: 0;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -340,6 +360,8 @@ body {
     flex-direction: column;
 
     gap: 4px;
+
+    min-width: 0;
 
     font-family: 'Minecraftia', sans-serif;
 }
@@ -380,6 +402,8 @@ body {
 
     inset: 0;
 
+    padding: 20px;
+
     display: flex;
 
     justify-content: center;
@@ -413,9 +437,15 @@ body {
 
     width: 520px;
 
-    max-width: 90%;
+    max-width: 100%;
+
+    max-height: 100%;
 
     padding: 6px;
+
+    display: flex;
+
+    flex-direction: column;
 
     background: #555;
 
@@ -444,6 +474,8 @@ body {
 
 .modal-title {
 
+    flex-shrink: 0;
+
     padding: 12px;
 
     text-align: center;
@@ -466,6 +498,16 @@ body {
 /* Contenido */
 
 .modal-content {
+
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    -webkit-overflow-scrolling: touch;
 
     margin-top: 6px;
 
@@ -491,6 +533,8 @@ body {
 /* Botón Done */
 
 .minecraft-close {
+
+    flex-shrink: 0;
 
     width: 100%;
 
@@ -582,8 +626,6 @@ body {
 
     .minecraft-modal {
 
-        max-height: calc(100dvh - 30px);
-
         border-width: 3px;
 
         box-shadow:
@@ -596,21 +638,26 @@ body {
     .modal-title {
 
         padding: 10px;
+
+        font-size: 18px;
     }
 
 
     .modal-content {
+
+        padding: 18px;
 
         line-height: 1.6;
     }
 
 }
 
-@media (max-width: 380px) {
+
+/* Moto G52 y similares (~393px) caen acá */
+
+@media (max-width: 420px) {
 
     .achievement {
-
-        width: calc(100vw - 20px);
 
         top: 10px;
 
@@ -644,6 +691,20 @@ body {
     .modal-overlay {
 
         padding: 10px;
+    }
+
+
+    .modal-title {
+
+        font-size: 16px;
+    }
+
+
+    .modal-content {
+
+        padding: 15px;
+
+        font-size: 13px;
     }
 
 }
