@@ -24,6 +24,7 @@
 
 html {
     font: 12pt 'Minecraftia', sans-serif;
+    overflow-x: hidden;
 }
 
 
@@ -53,12 +54,14 @@ body {
 .mc-menu {
     --btn-size: 30pt;
 
+    width: min(calc(var(--btn-size) * 12), 92vw);
+
     display: grid;
 
     grid-template-columns:
-        var(--btn-size)
-        calc(var(--btn-size) * 10)
-        var(--btn-size);
+        1fr
+        10fr
+        1fr;
 
     grid-template-rows:
         repeat(3, var(--btn-size))
@@ -269,7 +272,7 @@ body {
 
     transform: translate(-50%, -150px);
 
-    width: 430px;
+    width: min(430px, 92vw);
     min-height: 95px;
 
     display: flex;
